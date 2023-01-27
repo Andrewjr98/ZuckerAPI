@@ -44,8 +44,11 @@ module.exports = {
         ? res.status(404).json({ message: 'User Id is incorrect or does not exist.'})
         : Thought.deleteMany({ _id: {$in: User.thoughts} })
         )
-        .then(() => res.join({ message: 'User and their thoughts have been Destroyed!'}))
-        .catch((err) => res.status(500).json(err))
+        .then(() => res.json({ message: 'User and their thoughts have been Destroyed!'}))
+        .catch((err) => { 
+            console.log(err);
+            res.status(500).json(err)
+        })
     },
     addNewFriend(req,res){
         User.findOneAndUpdate(
